@@ -24,12 +24,14 @@ switch ($modx->event->name) {
         if ($resource->get('template') == $templateId) {  
             if ($resource->getTVValue('geolocalisation') != '') {
                                                            
-                $query = $resource->getTVValue('query');//on récupère la TV
-                $query = rawurlencode($query);
+                $street = $resource->getTVValue('street');//where street is the TV name
+                $street = rawurlencode($street);
+             
+                $city = $resource->getTVValue('city'); //where city is the TV's name
                 
                 $baseUrl    = 'http://nominatim.openstreetmap.org/search?limit=1';
                 $format     = 'jsonv2'; // see https://wiki.openstreetmap.org/wiki/Nominatim
-                $fullUrl    = "{$baseUrl}&format={$format}&q={$query}&email={$email}";
+                $fullUrl    = "{$baseUrl}&format={$format}&street={$street}&city={$city}&email={$email}";
                 
                 // lets get the data from Nominatims
                 $data       = file_get_contents($fullUrl);
